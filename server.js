@@ -1,8 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-const config = require('config');
-const fs = require('fs');
 require('dotenv').config();
 const setupRoutes = require('./routes/routes');
 const middlewares = require('./middlewares/middlewares');
@@ -47,7 +45,6 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 4000;
 const environment = app.get('env');
-console.log(config.get('name'));
 
 // Server Configuration && Database Connection
 app.listen(PORT, () => {
