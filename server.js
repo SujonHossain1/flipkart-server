@@ -4,7 +4,6 @@ const morgan = require('morgan');
 require('dotenv').config();
 const setupRoutes = require('./routes/routes');
 const middlewares = require('./middlewares/middlewares');
-const isAuth = require('./middlewares/auth');
 
 // App Config
 const app = express();
@@ -17,7 +16,7 @@ if (app.get('env').toLowerCase() === 'development') {
 app.use(middlewares);
 setupRoutes(app);
 
-app.get('/', isAuth, (req, res) => {
+app.get('/', (req, res) => {
     res.send({ message: 'Hello World' });
 });
 

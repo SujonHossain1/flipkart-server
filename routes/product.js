@@ -4,11 +4,10 @@ const {
     createProductWithImages,
     getProducts,
 } = require('../controllers/product');
-const isAuth = require('../middlewares/auth');
 const upload = require('../middlewares/upload');
 const productValidator = require('../validators/product');
 
-router.get('/', isAuth, getProducts);
+router.get('/', getProducts);
 
 router.post(
     '/add-product',

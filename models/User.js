@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const userSchema = new Schema(
+const authSchema = new Schema(
     {
         name: {
             type: String,
@@ -25,14 +25,18 @@ const userSchema = new Schema(
             required: true,
             minlength: [6, 'Password Must be 6 characters'],
         },
-        gender: String,
+        role: {
+            type: String,
+            enum: ['admin', 'user'],
+            default: 'user',
+        },
     },
     {
         timestamps: true,
     }
 );
 
-userSchema.pre('save', async function (next) {
+authSchema.pre('save', async function (next) {
     const user = this;
     if (user.isModified('password')) {
         user.password = await bcrypt.hash(user.password, 11);
@@ -40,11 +44,11 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-userSchema.methods.getToken = function () {
+authSchema.methods.getToken = function () {
     return jwt.sign(
         {
             _id: this._id,
-            type: 'user',
+            type: this.role,
         },
         process.env.JWT_SECRET,
         {
@@ -53,5 +57,5 @@ userSchema.methods.getToken = function () {
     );
 };
 
-const User = model('User', userSchema);
+const User = model('User', authSchema);
 module.exports = User;
