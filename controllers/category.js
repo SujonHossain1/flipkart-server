@@ -5,6 +5,10 @@ exports.createCategory = async (req, res, next) => {
         const { name, slug, parentId } = req.body;
         let categoryObj = { name, slug };
 
+        if (req.file) {
+            categoryObj.image = process.env.API + 'public/' + req.file.filename;
+        }
+
         if (parentId) {
             categoryObj.parentId = parentId;
         }

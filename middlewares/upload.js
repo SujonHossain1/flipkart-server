@@ -26,6 +26,20 @@ const upload = multer({
         fileSize: 10 * 1024 * 1024,
     },
     fileFilter: (req, file, cb) => {
+        const imageTypes = /jpeg|jpg|png|gif|svg/;
+        const extName = imageTypes.test(
+            path.extname(file.originalname).toLowerCase()
+        );
+        const mimeType = imageTypes.test(file.mimetype);
+
+        if (file.fieldname === 'categoryImage') {
+            if (extName && mimeType) {
+                cb(null, true);
+            } else {
+                cb(new Error('Allow png, jpg and jpeg'));
+            }
+        }
+
         if (file.fieldname === 'image') {
             if (
                 file.mimetype === 'image/png' ||

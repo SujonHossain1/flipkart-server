@@ -2,10 +2,10 @@ const { check } = require('express-validator');
 const Product = require('../models/Product');
 
 const productValidator = [
-    check('title')
+    check('name')
         .not()
         .isEmpty()
-        .withMessage('Product Title is required.')
+        .withMessage('Product name is required.')
         .trim(),
     check('price')
         .not()

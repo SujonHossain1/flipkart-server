@@ -1,5 +1,6 @@
 const { body } = require('express-validator');
 const User = require('../models/User');
+// const User = require('../models/User');
 
 exports.registrationValidator = [
     body('name').not().isEmpty().withMessage('Name is required').trim(),
@@ -7,9 +8,10 @@ exports.registrationValidator = [
         .isEmail()
         .withMessage('Please Provide a valid E-mail')
         .custom(async (email) => {
+            console.log(email);
             const user = await User.findOne({ email });
             if (user) {
-                return Promise.reject('E-mail already in use');
+                throw new Error('Email already exists!');
             }
             return true;
         })

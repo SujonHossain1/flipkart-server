@@ -36,19 +36,19 @@ exports.createProductWithImages = async (req, res, next) => {
             req.files.image?.map((image) => {
                 removeFile(image.filename);
             });
-            req.files.gallery?.map((image) => {
+            req.files?.gallery?.map((image) => {
                 removeFile(image.filename);
             });
             return res.status(400).send(errors.mapped());
         }
 
-        const gallery = req.files.gallery.map((file) => file.filename);
-        console.log(gallery);
+        const gallery = req.files?.gallery?.map((file) => file.filename);
 
         const product = await Product.create({
             ...req.body,
+            createdBy: req.admin._id,
             image: req.files.image[0].filename,
-            images: req.files.gallery.map((file) => file.filename),
+            images: gallery,
         });
 
         res.send({

@@ -31,7 +31,7 @@ exports.adminIsAuth = (req, res, next) => {
             });
         }
 
-        res.admin = { _id, type };
+        req.admin = { _id, type };
         next();
     } catch {
         next({

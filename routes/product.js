@@ -4,6 +4,7 @@ const {
     createProductWithImages,
     getProducts,
 } = require('../controllers/product');
+const { adminIsAuth } = require('../middlewares/auth');
 const upload = require('../middlewares/upload');
 const productValidator = require('../validators/product');
 
@@ -17,6 +18,7 @@ router.post(
 );
 router.post(
     '/add-product-images',
+    adminIsAuth,
     upload.fields([
         { name: 'image', maxCount: 1 },
         { name: 'gallery', maxCount: 4 },

@@ -2,15 +2,15 @@ const { Schema, model } = require('mongoose');
 
 const productSchema = new Schema(
     {
-        title: {
+        name: {
             type: String,
             trim: true,
             required: true,
         },
-
-        brand: {
+        slug: {
             type: String,
-            trim: true,
+            required: true,
+            unique: true,
         },
         alt: String,
         stock: {
@@ -22,14 +22,42 @@ const productSchema = new Schema(
             type: Number,
             required: true,
         },
+        description: {
+            type: String,
+            required: true,
+        },
         quantity: {
             type: Number,
             default: 1,
         },
+        offer: {
+            type: Number,
+        },
+
         tags: [String],
         image: String,
         images: [String],
-        description: String,
+        category: {
+            type: Schema.Types.ObjectId,
+            ref: 'Category',
+            required: true,
+        },
+        reviews: [
+            {
+                userId: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'User',
+                },
+                review: String,
+            },
+        ],
+        createdBy: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        },
+        updatedAt: Date,
+        metaTitle: String,
+        metaDescription: String,
     },
     {
         timestamps: true,

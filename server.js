@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
+const path = require('path');
 require('dotenv').config();
 const setupRoutes = require('./routes/routes');
 const middlewares = require('./middlewares/middlewares');
@@ -15,6 +16,7 @@ if (app.get('env').toLowerCase() === 'development') {
 //middlewares
 app.use(middlewares);
 setupRoutes(app);
+app.use('/public', express.static(path.join(__dirname, 'uploads')));
 
 app.get('/', (req, res) => {
     res.send({ message: 'Hello World' });
