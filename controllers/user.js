@@ -21,7 +21,7 @@ exports.signUp = async (req, res, next) => {
 exports.login = async (req, res, next) => {
     try {
         const { email, password } = req.body;
-        const user = await User.findOne({ email }).select('-__v');
+        const user = await User.findOne({ email, role: 'user' }).select('-__v');
 
         if (!user) {
             return res.status(400).json({ message: 'Invalid Credentials' });
