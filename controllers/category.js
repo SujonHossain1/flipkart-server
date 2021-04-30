@@ -2,7 +2,9 @@ const Category = require('../models/Category');
 
 exports.createCategory = async (req, res, next) => {
     try {
+        console.log(req.body);
         const { name, slug, parentId } = req.body;
+        console.log(req.file);
         let categoryObj = { name, slug };
 
         if (req.file) {
