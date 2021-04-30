@@ -6,11 +6,11 @@ exports.signUp = async (req, res, next) => {
     try {
         const errors = validationResult(req).formatWith((err) => err.msg);
         if (!errors.isEmpty()) {
-            return res.status(400).send(errors.mapped());
+            return res.status(400).send({
+                error: errors.errors[0]?.msg || 'Something went to Wrong!',
+            });
         }
-
         const user = await User.create(req.body);
-
         res.status(201).send({
             message: 'Registration successfully.',
             data: user,
@@ -37,13 +37,21 @@ exports.login = async (req, res, next) => {
         }
 
         const token = user.getToken();
+        res.cookie('admin-token', token, { expiresIn: '1h' });
 
         res.status(200).send({
             message: 'Login Successful',
-            data: user,
+            user,
             token,
         });
     } catch (err) {
         console.log(err);
     }
+};
+
+exports.signOut = (req, res, next) => {
+    res.clearCookie('admin-token');
+    res.status(200).send({
+        message: 'Sign Out Successfully!',
+    });
 };
