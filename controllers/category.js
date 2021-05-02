@@ -2,9 +2,7 @@ const Category = require('../models/Category');
 
 exports.createCategory = async (req, res, next) => {
     try {
-        console.log(req.body);
         const { name, slug, parentId } = req.body;
-        console.log(req.file);
         let categoryObj = { name, slug };
 
         if (req.file) {
@@ -16,6 +14,8 @@ exports.createCategory = async (req, res, next) => {
         }
 
         const category = await Category.create(categoryObj);
+
+        console.log(category);
         res.status(201).send({
             message: 'Category created successfully',
             category: category,
@@ -61,6 +61,7 @@ function getCategoriesList(categories, parentId = null) {
             _id: cat._id,
             name: cat.name,
             slug: cat.slug,
+            parentId: cat.parentId,
             children: getCategoriesList(categories, cat._id),
         });
     }
