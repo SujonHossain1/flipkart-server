@@ -51,7 +51,7 @@ const upload = multer({
                 cb(new Error('Allow png, jpg and jpeg'));
             }
         }
-        if (file.fieldname === 'gallery') {
+        if (file.fieldname === 'images') {
             if (
                 file.mimetype === 'image/png' ||
                 file.mimetype === 'image/jpg' ||

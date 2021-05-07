@@ -13,10 +13,6 @@ const productSchema = new Schema(
             unique: true,
         },
         alt: String,
-        stock: {
-            type: Number,
-            required: true,
-        },
         previousPrice: Number,
         price: {
             type: Number,
@@ -33,9 +29,7 @@ const productSchema = new Schema(
         offer: {
             type: Number,
         },
-
         tags: [String],
-        image: String,
         images: [String],
         category: {
             type: Schema.Types.ObjectId,

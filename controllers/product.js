@@ -30,36 +30,34 @@ exports.createProduct = async (req, res, next) => {
 };
 
 exports.createProductWithImages = async (req, res, next) => {
+    console.log(req.body);
+    console.log(req.files);
+
     try {
         const errors = validationResult(req).formatWith((err) => err.msg);
         if (!errors.isEmpty()) {
-            req.files.image?.map((image) => {
+            req.files?.map((image) => {
                 removeFile(image.filename);
             });
-            req.files?.gallery?.map((image) => {
-                removeFile(image.filename);
-            });
-            return res.status(400).send(errors.mapped());
+            return res
+                .status(400)
+                .send(errors.mapped({ error: errors.errors[0]?.msg }));
         }
 
-        const gallery = req.files?.gallery?.map((file) => file.filename);
+        const images = req.files?.map((file) => file.filename);
 
         const product = await Product.create({
             ...req.body,
             createdBy: req.admin._id,
-            image: req.files.image[0].filename,
-            images: gallery,
+            images: images,
         });
 
-        res.send({
+        res.status(201).send({
             message: 'Product created Successfully!',
-            data: product,
+            product: product,
         });
     } catch (err) {
-        req.files.image?.map((image) => {
-            removeFile(image.filename);
-        });
-        req.files.gallery?.map((image) => {
+        req.files?.map((image) => {
             removeFile(image.filename);
         });
         next(err);

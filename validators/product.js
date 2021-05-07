@@ -14,11 +14,6 @@ const productValidator = [
         .isNumeric()
         .withMessage('Product price must be numeric.'),
 
-    check('stock')
-        .not()
-        .isEmpty()
-        .withMessage('Product stock quantity is required.'),
-
     check('description')
         .not()
         .isEmpty()

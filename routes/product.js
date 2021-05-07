@@ -19,10 +19,7 @@ router.post(
 router.post(
     '/add-product-images',
     adminIsAuth,
-    upload.fields([
-        { name: 'image', maxCount: 1 },
-        { name: 'gallery', maxCount: 4 },
-    ]),
+    upload.array('images'),
     productValidator,
     createProductWithImages
 );
