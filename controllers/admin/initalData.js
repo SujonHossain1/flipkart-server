@@ -1,5 +1,6 @@
 const Product = require('../../models/Product');
 const Category = require('../../models/Category');
+const getCategoriesList = require('../../helpers/category');
 
 exports.initialData = async (req, res, next) => {
     try {
@@ -8,7 +9,7 @@ exports.initialData = async (req, res, next) => {
 
         res.status(200).send({
             products,
-            categories,
+            categories: getCategoriesList(categories),
         });
     } catch (error) {
         next({
