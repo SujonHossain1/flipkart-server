@@ -34,7 +34,7 @@ app.use((err, req, res, next) => {
     } else if (err.message) {
         res.status(err.status || 500).send({
             success: false,
-            TypeError: err.message,
+            error: err.message,
         });
     } else {
         res.status(500).send({
