@@ -30,9 +30,6 @@ exports.createProduct = async (req, res, next) => {
 };
 
 exports.createProductWithImages = async (req, res, next) => {
-    console.log(req.body);
-    console.log(req.files);
-
     try {
         const errors = validationResult(req).formatWith((err) => err.msg);
         if (!errors.isEmpty()) {
