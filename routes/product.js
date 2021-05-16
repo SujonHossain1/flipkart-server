@@ -3,12 +3,14 @@ const {
     createProduct,
     createProductWithImages,
     getProducts,
+    getProductsBySlug,
 } = require('../controllers/product');
 const { adminIsAuth } = require('../middlewares/auth');
 const upload = require('../middlewares/upload');
 const productValidator = require('../validators/product');
 
 router.get('/', getProducts);
+router.get('/products-by-slug/:slug', getProductsBySlug);
 
 router.post(
     '/add-product',
