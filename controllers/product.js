@@ -27,12 +27,12 @@ exports.getProductsBySlug = async (req, res, next) => {
 
         const products = await Product.find({ category: category._id });
 
-        if (products.length === 0) {
-            next({
-                status: 404,
-                message: 'products not for this ' + slug,
-            });
-        }
+        // if (products.length === 0) {
+        //     next({
+        //         status: 404,
+        //         message: 'products not for this ' + slug,
+        //     });
+        // }
 
         res.status(200).send({
             products,

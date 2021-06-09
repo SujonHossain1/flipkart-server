@@ -14,6 +14,10 @@ const categorySchema = new Schema(
             unique: true,
             required: true,
         },
+        type: {
+            type: String,
+            default: 'product',
+        },
         parentId: String,
     },
     { timestamps: true }
